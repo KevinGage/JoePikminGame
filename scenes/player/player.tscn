@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://cpitfqts4nq0a"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_8gwor"]
+[ext_resource type="Texture2D" uid="uid://o661srvcb5rh" path="res://images/JoeyRev2.png" id="1_llu2e"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cirqy"]
+radius = 11.0
+height = 48.0
+
+[sub_resource type="Animation" id="Animation_lrol0"]
+resource_name = "player_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_ipcsp"]
+resource_name = "player_walk"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 3, 5]
+}
+
+[sub_resource type="Animation" id="Animation_y6bpb"]
+resource_name = "player_jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xima8"]
+_data = {
+"player_idle": SubResource("Animation_lrol0"),
+"player_jump": SubResource("Animation_y6bpb"),
+"player_walk": SubResource("Animation_ipcsp")
+}
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 26
+script = ExtResource("1_8gwor")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_llu2e")
+hframes = 3
+vframes = 3
+frame = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 8)
+shape = SubResource("CapsuleShape2D_cirqy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xima8")
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true

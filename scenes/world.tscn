@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://b21cc0y0noc0h"]
+
+[ext_resource type="PackedScene" uid="uid://ne85h37tfl61" path="res://scenes/level_1.tscn" id="1_3hliq"]
+[ext_resource type="PackedScene" uid="uid://uoqp1ls6tba8" path="res://scenes/pikmin/red_pikmin.tscn" id="2_rh5xj"]
+[ext_resource type="PackedScene" uid="uid://c3yvymho5oxbt" path="res://scenes/seeds/red_seed.tscn" id="3_7bsde"]
+[ext_resource type="PackedScene" uid="uid://cpitfqts4nq0a" path="res://scenes/player/player.tscn" id="4_puvoh"]
+
+[node name="World" type="Node2D"]
+
+[node name="RedSeed" parent="." instance=ExtResource("3_7bsde")]
+position = Vector2(49, 4)
+
+[node name="Level_1" parent="." instance=ExtResource("1_3hliq")]
+
+[node name="RedPikmin" parent="." instance=ExtResource("2_rh5xj")]
+position = Vector2(128, -23)
+
+[node name="Player" parent="." instance=ExtResource("4_puvoh")]
+position = Vector2(84, -43)
+
+[node name="RedPikmin2" parent="." instance=ExtResource("2_rh5xj")]
+position = Vector2(30, -19)
