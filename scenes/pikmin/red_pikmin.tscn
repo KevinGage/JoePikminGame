@@ -93,7 +93,7 @@ navigation_agent = NodePath("NavigationAgent2D")
 [node name="Flipables" type="Node2D" parent="."]
 
 [node name="jump_detect_cast" type="RayCast2D" parent="Flipables"]
-position = Vector2(3, 16)
+position = Vector2(5, 32)
 target_position = Vector2(0, 8)
 collision_mask = 2
 
