@@ -34,11 +34,11 @@ func _physics_process(delta):
 			
 			var direction_angle = rad_to_deg(direction.angle())
 			
-			if direction.x < 0:
+			if direction.x < -0.5:
 				velocity.x = -1 * SPEED
 				$Flipables.scale.x = -1
 				$AnimationPlayer.play("red_pikmin_walk")
-			elif direction.x > 0:
+			elif direction.x > 0.5:
 				velocity.x = SPEED
 				$Flipables.scale.x = 1
 				$AnimationPlayer.play("red_pikmin_walk")
