@@ -7,6 +7,7 @@ extends CharacterBody2D
 
 const SPEED = 200.0
 const JUMP_VELOCITY = -400.0
+const FRICTION: float = 50
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -43,13 +44,16 @@ func _physics_process(delta):
 				$Flipables.scale.x = 1
 				$AnimationPlayer.play("red_pikmin_walk")
 			if is_on_floor():
-				print(direction.y)
 				if $Flipables/jump_detect_cast.is_colliding() == false and direction.y <= -0.48:
 					velocity.y = JUMP_VELOCITY
 				if direction_angle < -60 and direction_angle > -120:
 					velocity.y = JUMP_VELOCITY
 		else:
 			velocity.x = 0
+			
+	else:
+		if is_on_floor():
+			apply_friction()
 
 	# Add the gravity.
 	if not is_on_floor():
@@ -97,8 +101,25 @@ func _physics_process(delta):
 #	move_and_slide()
 
 
+func apply_friction():
+	velocity.x = move_toward(velocity.x, 0, FRICTION)
+
+
 func _on_area_2d_body_entered(body):
-	print("time to follow")
 	if is_collectable:
 		if "follow" in body:
+			print("time to follow")
 			body.follow(self)
+
+
+func throw(direction: int):
+	print("weeeee!")
+	$Area2D.monitoring = false
+	$Area2D.monitorable = false
+	velocity.y = -400
+	velocity.x = 400 * direction
+	$Timer.start()
+
+func _on_timer_timeout():
+	$Area2D.monitoring = true
+	$Area2D.monitorable = true

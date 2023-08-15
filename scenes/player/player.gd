@@ -4,6 +4,8 @@ extends CharacterBody2D
 
 const SPEED = 200.0
 const JUMP_VELOCITY = -400.0
+#const ACCELERATION: float = 30.0
+const FRICTION: float = 50.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -29,7 +31,8 @@ func _physics_process(delta):
 		elif velocity.x < 0:
 			$Sprite2D.flip_h = true
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+#		velocity.x = move_toward(velocity.x, 0, SPEED)
+		apply_friction()
 		
 		# Handle animations
 	if is_on_floor():
@@ -43,6 +46,21 @@ func _physics_process(delta):
 	move_and_slide()
 
 
+#func accelerate(direction: Vector2):
+#	velocity = velocity.move_toward(SPEED * direction, ACCELERATION)
+
+
+func apply_friction():
+	velocity.x = move_toward(velocity.x, 0, FRICTION)
+
+
+func _input(event):
+	if event.is_action_pressed("throw"):
+		throw()
+	elif event.is_action_pressed("pluck"):
+		pluck()
+
+
 func follow(follower):
 	print("follow me")
 	if followers.size() == 0:
@@ -52,3 +70,21 @@ func follow(follower):
 
 	follower.is_collectable = false
 	followers.append(follower)
+
+
+func throw():
+	print("throw")
+	if followers.size() > 0:
+		if "throw" in followers[0]:
+			var throw_direction: int = 1
+			if $Sprite2D.flip_h == true:
+				throw_direction = -1
+			
+			followers[0].throw(throw_direction)
+			followers[0].is_collectable = true
+			followers[0].movement_target = null
+			followers.pop_front()
+
+
+func pluck():
+	print("pluck")
