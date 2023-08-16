@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3yvymho5oxbt"]
+[gd_scene load_steps=7 format=3 uid="uid://c3yvymho5oxbt"]
 
 [ext_resource type="Script" path="res://scenes/seeds/red_seed.gd" id="1_puigi"]
 [ext_resource type="Texture2D" uid="uid://do7a6rxs2n6cg" path="res://images/red_seed_idle.png" id="1_vdfxm"]
+[ext_resource type="AudioStream" uid="uid://bn5qi50l3i6pw" path="res://audio/pluck.mp3" id="3_el70x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_161p8"]
 size = Vector2(11, 21)
@@ -50,4 +51,8 @@ libraries = {
 [node name="SpawnPoint" type="Node2D" parent="."]
 position = Vector2(0, -30)
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_el70x")
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]

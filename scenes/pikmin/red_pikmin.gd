@@ -32,7 +32,7 @@ func _physics_process(delta):
 		if navigation_agent.is_navigation_finished() == false:
 			var target_distance = movement_target.position.distance_to($".".position)
 			
-			if target_distance < 100:
+			if target_distance < 175:
 				var next_path_position: Vector2 = navigation_agent.get_next_path_position()
 				var direction = (next_path_position - global_position).normalized()
 				var direction_angle = rad_to_deg(direction.angle())
@@ -115,6 +115,7 @@ func apply_friction():
 func _on_area_2d_body_entered(body):
 	if is_collectable:
 		if "follow" in body:
+			$CallAudioPlayer.play()
 			body.follow(self)
 
 
@@ -123,7 +124,7 @@ func throw(direction: Vector2):
 	$Area2D.monitorable = false
 	velocity.y = direction.y
 	velocity.x = direction.x
-	$AudioStreamPlayer.play()
+	$ThrowAudioPlayer.play()
 	$Timer.start()
 
 func _on_timer_timeout():
