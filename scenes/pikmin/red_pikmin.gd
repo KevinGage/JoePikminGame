@@ -60,7 +60,10 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 	else:
 		if velocity.x == 0:
-			$AnimationPlayer.play("red_pikmin_idle")
+			if movement_target != null:
+				$AnimationPlayer.play("red_pikmin_idle")
+			else:
+				$AnimationPlayer.play("red_pikmin_idle_down")
 	
 	if velocity.y > 0:
 		$AnimationPlayer.play("red_pikmin_jump")
