@@ -47,4 +47,7 @@ libraries = {
 "": SubResource("AnimationLibrary_p8m0b")
 }
 
+[node name="SpawnPoint" type="Node2D" parent="."]
+position = Vector2(0, -30)
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
