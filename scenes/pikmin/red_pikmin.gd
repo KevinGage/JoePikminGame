@@ -30,24 +30,28 @@ func _physics_process(delta):
 		navigation_agent.target_position = movement_target.position
 
 		if navigation_agent.is_navigation_finished() == false:
-			var next_path_position: Vector2 = navigation_agent.get_next_path_position()
-			var direction = (next_path_position - global_position).normalized()
+			var target_distance = movement_target.position.distance_to($".".position)
 			
-			var direction_angle = rad_to_deg(direction.angle())
-			
-			if direction.x < -0.5:
-				velocity.x = -1 * SPEED
-				$Flipables.scale.x = -1
-				$AnimationPlayer.play("red_pikmin_walk")
-			elif direction.x > 0.5:
-				velocity.x = SPEED
-				$Flipables.scale.x = 1
-				$AnimationPlayer.play("red_pikmin_walk")
-			if is_on_floor():
-				if $Flipables/jump_detect_cast.is_colliding() == false and direction.y <= -0.48:
-					velocity.y = JUMP_VELOCITY
-				if direction_angle < -60 and direction_angle > -120:
-					velocity.y = JUMP_VELOCITY
+			if target_distance < 100:
+				var next_path_position: Vector2 = navigation_agent.get_next_path_position()
+				var direction = (next_path_position - global_position).normalized()
+				var direction_angle = rad_to_deg(direction.angle())
+				
+				if direction.x < -0.5:
+					velocity.x = -1 * SPEED
+					$Flipables.scale.x = -1
+					$AnimationPlayer.play("red_pikmin_walk")
+				elif direction.x > 0.5:
+					velocity.x = SPEED
+					$Flipables.scale.x = 1
+					$AnimationPlayer.play("red_pikmin_walk")
+				if is_on_floor():
+					if $Flipables/jump_detect_cast.is_colliding() == false and direction.y <= -0.48:
+						velocity.y = JUMP_VELOCITY
+					if direction_angle < -60 and direction_angle > -120:
+						velocity.y = JUMP_VELOCITY
+			else:
+				movement_target.stop_follow(self)
 		else:
 			velocity.x = 0
 			
@@ -125,3 +129,8 @@ func throw(direction: Vector2):
 func _on_timer_timeout():
 	$Area2D.monitoring = true
 	$Area2D.monitorable = true
+
+
+func stop_follow(follower):
+	if movement_target != null and "stop_follow" in movement_target:
+		movement_target.stop_follow(follower)

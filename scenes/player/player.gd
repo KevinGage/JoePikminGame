@@ -92,3 +92,12 @@ func pluck():
 	$Area2D.monitoring = false
 	$Area2D.monitorable = false
 
+
+func stop_follow(lost_follower: CharacterBody2D):
+	var i = followers.find(lost_follower)
+	var lost_followers = followers.slice(i)
+	
+	for follower in lost_followers:
+		follower.is_collectable = true
+		follower.movement_target = null
+		followers.erase(follower)
