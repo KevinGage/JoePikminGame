@@ -111,16 +111,15 @@ func apply_friction():
 func _on_area_2d_body_entered(body):
 	if is_collectable:
 		if "follow" in body:
-			print("time to follow")
 			body.follow(self)
 
 
 func throw(direction: Vector2):
-	print("weeeee!")
 	$Area2D.monitoring = false
 	$Area2D.monitorable = false
 	velocity.y = direction.y
 	velocity.x = direction.x
+	$AudioStreamPlayer.play()
 	$Timer.start()
 
 func _on_timer_timeout():
