@@ -112,12 +112,12 @@ func _on_area_2d_body_entered(body):
 			body.follow(self)
 
 
-func throw(direction: int):
+func throw(direction: Vector2):
 	print("weeeee!")
 	$Area2D.monitoring = false
 	$Area2D.monitorable = false
-	velocity.y = -400
-	velocity.x = 400 * direction
+	velocity.y = direction.y
+	velocity.x = direction.x
 	$Timer.start()
 
 func _on_timer_timeout():

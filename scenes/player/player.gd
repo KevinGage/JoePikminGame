@@ -76,9 +76,9 @@ func throw():
 	print("throw")
 	if followers.size() > 0:
 		if "throw" in followers[0]:
-			var throw_direction: int = 1
+			var throw_direction = Vector2(400 + (abs(velocity.x) / 2) , -300)
 			if $Sprite2D.flip_h == true:
-				throw_direction = -1
+				throw_direction.x *= -1
 			
 			followers[0].throw(throw_direction)
 			followers[0].is_collectable = true
