@@ -84,6 +84,8 @@ func throw():
 			followers[0].is_collectable = true
 			followers[0].movement_target = null
 			followers.pop_front()
+			if followers.size() > 0:
+				followers[0].movement_target = self
 
 
 func pluck():
