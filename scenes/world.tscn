@@ -10,6 +10,12 @@
 [node name="RedSeed" parent="." instance=ExtResource("3_7bsde")]
 position = Vector2(49, -7)
 
+[node name="RedSeed2" parent="." instance=ExtResource("3_7bsde")]
+position = Vector2(259, -6)
+
+[node name="RedSeed3" parent="." instance=ExtResource("3_7bsde")]
+position = Vector2(590, 27)
+
 [node name="Level_1" parent="." instance=ExtResource("1_3hliq")]
 
 [node name="RedPikmin" parent="." instance=ExtResource("2_rh5xj")]
