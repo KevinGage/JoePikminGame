@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://6kk858b2aaag"]
+
+[ext_resource type="PackedScene" uid="uid://00lggou8ux1p" path="res://scenes/seeds/seed.tscn" id="1_pireb"]
+[ext_resource type="Texture2D" uid="uid://bne5seakdl655" path="res://images/yellow_seed.png" id="2_785lt"]
+[ext_resource type="PackedScene" uid="uid://fp07g7i2bv6o" path="res://scenes/pikmin/yellow_pikmin.tscn" id="3_rxu03"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_srahr"]
+size = Vector2(11, 21)
+
+[sub_resource type="Animation" id="Animation_r4lfy"]
+resource_name = "yellow_seed_idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bbava"]
+_data = {
+"yellow_seed_idle": SubResource("Animation_r4lfy")
+}
+
+[node name="Seed" instance=ExtResource("1_pireb")]
+texture = ExtResource("2_785lt")
+hframes = 3
+pikmin_scene = ExtResource("3_rxu03")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(-0.5, 21.5)
+shape = SubResource("RectangleShape2D_srahr")
+
+[node name="AnimationPlayer" parent="." index="1"]
+autoplay = "yellow_seed_idle"
+libraries = {
+"": SubResource("AnimationLibrary_bbava")
+}
