@@ -62,7 +62,6 @@ func _input(event):
 
 
 func follow(follower):
-	print("follow me")
 	if followers.size() == 0:
 		follower.movement_target = self
 	else:
@@ -73,7 +72,6 @@ func follow(follower):
 
 
 func throw():
-	print("throw")
 	if followers.size() > 0:
 		if "throw" in followers[0]:
 			var throw_direction = Vector2(400 + (abs(velocity.x) / 2) , -300)
@@ -89,4 +87,8 @@ func throw():
 
 
 func pluck():
-	print("pluck")
+	$Area2D.monitoring = true
+	$Area2D.monitorable = true
+	$Area2D.monitoring = false
+	$Area2D.monitorable = false
+

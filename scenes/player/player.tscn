@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpitfqts4nq0a"]
+[gd_scene load_steps=9 format=3 uid="uid://cpitfqts4nq0a"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_8gwor"]
 [ext_resource type="Texture2D" uid="uid://o661srvcb5rh" path="res://images/JoeyRev2.png" id="1_llu2e"]
@@ -63,6 +63,10 @@ _data = {
 "player_walk": SubResource("Animation_ipcsp")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ylqda"]
+radius = 11.0
+height = 48.0
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 26
 script = ExtResource("1_8gwor")
@@ -85,3 +89,13 @@ libraries = {
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 16
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-3, 8)
+shape = SubResource("CapsuleShape2D_ylqda")
