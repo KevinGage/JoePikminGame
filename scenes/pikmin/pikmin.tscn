@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1r0xxawgst3w"]
+
+[ext_resource type="Script" path="res://scenes/pikmin/pikmin.gd" id="1_w840j"]
+[ext_resource type="AudioStream" uid="uid://dj6cdhcbjao6h" path="res://audio/throw.mp3" id="2_47hbq"]
+[ext_resource type="AudioStream" uid="uid://gt5pdy4t3a1k" path="res://audio/call.mp3" id="3_qql5e"]
+
+[node name="Pikmin" type="CharacterBody2D" node_paths=PackedStringArray("navigation_agent")]
+collision_mask = 30
+script = ExtResource("1_w840j")
+navigation_agent = NodePath("NavigationAgent2D")
+
+[node name="Flipables" type="Node2D" parent="."]
+
+[node name="JumpDetectCast" type="RayCast2D" parent="Flipables"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Flipables"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="CollectionArea" type="Area2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea"]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="ThrowAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_47hbq")
+
+[node name="CollectAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_qql5e")
+
+[connection signal="body_entered" from="CollectionArea" to="." method="_on_collection_area_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
