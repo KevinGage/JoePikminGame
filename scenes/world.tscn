@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://b21cc0y0noc0h"]
+[gd_scene load_steps=9 format=3 uid="uid://b21cc0y0noc0h"]
 
 [ext_resource type="PackedScene" uid="uid://ne85h37tfl61" path="res://scenes/level_1.tscn" id="1_3hliq"]
 [ext_resource type="PackedScene" uid="uid://6kk858b2aaag" path="res://scenes/seeds/yellow_seed.tscn" id="2_lnf4n"]
+[ext_resource type="PackedScene" uid="uid://cf3ow13yya7p7" path="res://scenes/pikmin/red_pikmin.tscn" id="2_rh5xj"]
 [ext_resource type="PackedScene" uid="uid://bx1w0i05q4vkm" path="res://scenes/seeds/red_seed.tscn" id="3_7bsde"]
 [ext_resource type="PackedScene" uid="uid://wuyc6lec35ri" path="res://scenes/seeds/blue_seed.tscn" id="3_uh8mh"]
 [ext_resource type="PackedScene" uid="uid://cpitfqts4nq0a" path="res://scenes/player/player.tscn" id="4_puvoh"]
 [ext_resource type="PackedScene" uid="uid://fp07g7i2bv6o" path="res://scenes/pikmin/yellow_pikmin.tscn" id="6_kfdrc"]
+[ext_resource type="PackedScene" uid="uid://ct3bt84tk5xdn" path="res://scenes/pikmin/blue_pikmin.tscn" id="8_hwfae"]
 
 [node name="World" type="Node2D"]
 
@@ -27,4 +29,10 @@ position = Vector2(248, -4)
 position = Vector2(84, -43)
 
 [node name="Pikmin" parent="." instance=ExtResource("6_kfdrc")]
-position = Vector2(278, -80)
+position = Vector2(277, -102)
+
+[node name="Pikmin3" parent="." instance=ExtResource("2_rh5xj")]
+position = Vector2(396, -141)
+
+[node name="Pikmin2" parent="." instance=ExtResource("8_hwfae")]
+position = Vector2(355, -138)
