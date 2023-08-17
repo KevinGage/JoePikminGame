@@ -9,13 +9,16 @@ const SPEED = 200.0
 const JUMP_VELOCITY = -400.0
 const FRICTION: float = 50
 
+const path_desired_distance_ground: float = 32.0
+const path_desired_distance_jump: float = 4.0
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	navigation_agent.path_desired_distance = 32.0
+	navigation_agent.path_desired_distance = path_desired_distance_ground
 	navigation_agent.target_desired_distance = 4.0
 	
 	call_deferred("actor_setup")
@@ -27,6 +30,11 @@ func actor_setup():
 
 func _physics_process(delta):
 	if movement_target != null:
+		if movement_target.is_on_floor() == false or is_on_floor() == false:
+			navigation_agent.path_desired_distance = path_desired_distance_jump
+		else:
+			navigation_agent.path_desired_distance = path_desired_distance_ground
+
 		navigation_agent.target_position = movement_target.position
 
 		if navigation_agent.is_navigation_finished() == false:
@@ -35,7 +43,7 @@ func _physics_process(delta):
 			if target_distance < 175:
 				var next_path_position: Vector2 = navigation_agent.get_next_path_position()
 				var direction = (next_path_position - global_position).normalized()
-				var direction_angle = rad_to_deg(direction.angle())
+#				var direction_angle = rad_to_deg(direction.angle())
 				
 				if direction.x < -0.5:
 					velocity.x = -1 * SPEED
@@ -46,10 +54,11 @@ func _physics_process(delta):
 					$Flipables.scale.x = 1
 					$AnimationPlayer.play("walk")
 				if is_on_floor():
-					if $Flipables/JumpDetectCast.is_colliding() == false and direction.y <= -0.48:
+					if $Flipables/JumpDetectCast.is_colliding() == false and direction.y <= 0.1:
 						velocity.y = JUMP_VELOCITY
-					if direction_angle < -60 and direction_angle > -120:
-						velocity.y = JUMP_VELOCITY
+					if $Flipables/RayCast2D2.is_colliding():
+						if direction.y <= -0.1:
+							velocity.y = JUMP_VELOCITY
 			else:
 				movement_target.stop_follow(self)
 		else:
