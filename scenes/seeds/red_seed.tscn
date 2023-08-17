@@ -37,6 +37,7 @@ position = Vector2(-0.5, 21.5)
 shape = SubResource("RectangleShape2D_20njo")
 
 [node name="AnimationPlayer" parent="." index="1"]
+autoplay = "idle"
 libraries = {
 "": SubResource("AnimationLibrary_i1a5l")
 }
