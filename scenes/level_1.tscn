@@ -890,9 +890,9 @@ physics_layer_0/collision_mask = 29
 sources/1 = SubResource("TileSetAtlasSource_yg7dv")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_uu5or"]
-vertices = PackedVector2Array(-462, -90, 922, -102, 923, 15, -464, 16)
+vertices = PackedVector2Array(-464, -413, 915, -411, 923, 15, -464, 16)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-462, -90, 922, -102, 923, 15, -464, 16)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-464, -413, 915, -411, 923, 15, -464, 16)])
 
 [node name="Level_1" type="Node2D"]
 
