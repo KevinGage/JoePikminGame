@@ -9,7 +9,7 @@ const SPEED = 200.0
 const JUMP_VELOCITY = -400.0
 const FRICTION: float = 50
 
-const path_desired_distance_ground: float = 32.0
+const path_desired_distance_ground: float = 20.0
 const path_desired_distance_jump: float = 4.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -54,7 +54,7 @@ func _physics_process(delta):
 					$Flipables.scale.x = 1
 					$AnimationPlayer.play("walk")
 				if is_on_floor():
-					if $Flipables/JumpDetectCast.is_colliding() == false and direction.y <= 0.1:
+					if $Flipables/JumpDetectCast.is_colliding() == false and direction.y <= 0:
 						velocity.y = JUMP_VELOCITY
 					if $Flipables/RayCast2D2.is_colliding():
 						if direction.y <= -0.1:
