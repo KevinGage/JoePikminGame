@@ -1,16 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://uoqp1ls6tba8"]
+[gd_scene load_steps=10 format=3 uid="uid://cf3ow13yya7p7"]
 
-[ext_resource type="Script" path="res://scenes/pikmin/red_pikmin.gd" id="1_8djra"]
-[ext_resource type="Texture2D" uid="uid://e3omnke56np2" path="res://images/red_pikmin.png" id="2_m864c"]
-[ext_resource type="AudioStream" uid="uid://dj6cdhcbjao6h" path="res://audio/throw.mp3" id="3_5edk0"]
-[ext_resource type="AudioStream" uid="uid://gt5pdy4t3a1k" path="res://audio/call.mp3" id="4_qlqrj"]
+[ext_resource type="PackedScene" uid="uid://d1r0xxawgst3w" path="res://scenes/pikmin/pikmin.tscn" id="1_r56sq"]
+[ext_resource type="Texture2D" uid="uid://b3fa415thlumk" path="res://images/red_pikmin.png" id="2_m864c"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8wca"]
-radius = 8.0
-height = 28.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6u6l8"]
+radius = 7.0
+height = 34.0
 
-[sub_resource type="Animation" id="Animation_evp0m"]
-resource_name = "red_pikmin_idle"
+[sub_resource type="Animation" id="Animation_inh5d"]
+resource_name = "idle"
 length = 0.6
 loop_mode = 1
 tracks/0/type = "value"
@@ -26,8 +24,25 @@ tracks/0/keys = {
 "values": [15, 16]
 }
 
-[sub_resource type="Animation" id="Animation_jq4ut"]
-resource_name = "red_pikmin_idle_down"
+[sub_resource type="Animation" id="Animation_bdd07"]
+resource_name = "walk"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Flipables/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_jf24c"]
+resource_name = "idle_down"
 length = 2.4
 loop_mode = 1
 tracks/0/type = "value"
@@ -43,8 +58,8 @@ tracks/0/keys = {
 "values": [10, 11, 12, 13, 14, 13, 12, 11]
 }
 
-[sub_resource type="Animation" id="Animation_q26ev"]
-resource_name = "red_pikmin_jump"
+[sub_resource type="Animation" id="Animation_g1iwq"]
+resource_name = "jump"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -58,80 +73,38 @@ tracks/0/keys = {
 "values": [0, 1, 2]
 }
 
-[sub_resource type="Animation" id="Animation_ln4g5"]
-resource_name = "red_pikmin_walk"
-length = 0.3
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Flipables/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [5, 6, 7]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_wwtm6"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gye32"]
 _data = {
-"red_pikmin_idle": SubResource("Animation_evp0m"),
-"red_pikmin_idle_down": SubResource("Animation_jq4ut"),
-"red_pikmin_jump": SubResource("Animation_q26ev"),
-"red_pikmin_walk": SubResource("Animation_ln4g5")
+"idle": SubResource("Animation_inh5d"),
+"idle_down": SubResource("Animation_jf24c"),
+"jump": SubResource("Animation_g1iwq"),
+"walk": SubResource("Animation_bdd07")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ub5s0"]
-radius = 8.0
-height = 28.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_il4om"]
+radius = 7.0
+height = 34.0
 
-[node name="RedPikmin" type="CharacterBody2D" node_paths=PackedStringArray("navigation_agent")]
-collision_mask = 30
-script = ExtResource("1_8djra")
-navigation_agent = NodePath("NavigationAgent2D")
+[node name="Pikmin" instance=ExtResource("1_r56sq")]
 
-[node name="Flipables" type="Node2D" parent="."]
+[node name="JumpDetectCast" parent="Flipables" index="0"]
+position = Vector2(9, 33)
+target_position = Vector2(0, 14)
 
-[node name="jump_detect_cast" type="RayCast2D" parent="Flipables"]
-position = Vector2(5, 32)
-target_position = Vector2(0, 8)
-collision_mask = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="Flipables"]
-position = Vector2(-1, 0)
+[node name="Sprite2D" parent="Flipables" index="1"]
 texture = ExtResource("2_m864c")
 hframes = 5
 vframes = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 18)
-shape = SubResource("CapsuleShape2D_g8wca")
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(1, 15)
+shape = SubResource("CapsuleShape2D_6u6l8")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "red_pikmin_walk"
+[node name="AnimationPlayer" parent="." index="2"]
 libraries = {
-"": SubResource("AnimationLibrary_wwtm6")
+"": SubResource("AnimationLibrary_gye32")
 }
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 16
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-1, 18)
-shape = SubResource("CapsuleShape2D_ub5s0")
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-
-[node name="Timer" type="Timer" parent="."]
-one_shot = true
-
-[node name="ThrowAudioPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_5edk0")
-
-[node name="CallAudioPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_qlqrj")
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="CollisionShape2D" parent="CollectionArea" index="0"]
+position = Vector2(1, 15)
+shape = SubResource("CapsuleShape2D_il4om")

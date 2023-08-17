@@ -1,20 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3yvymho5oxbt"]
+[gd_scene load_steps=6 format=3 uid="uid://bx1w0i05q4vkm"]
 
-[ext_resource type="Script" path="res://scenes/seeds/red_seed.gd" id="1_puigi"]
-[ext_resource type="Texture2D" uid="uid://do7a6rxs2n6cg" path="res://images/red_seed_idle.png" id="1_vdfxm"]
-[ext_resource type="AudioStream" uid="uid://bn5qi50l3i6pw" path="res://audio/pluck.mp3" id="3_el70x"]
+[ext_resource type="PackedScene" uid="uid://00lggou8ux1p" path="res://scenes/seeds/seed.tscn" id="1_as6n5"]
+[ext_resource type="Texture2D" uid="uid://do7a6rxs2n6cg" path="res://images/red_seed.png" id="2_pkljp"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_161p8"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_20njo"]
 size = Vector2(11, 21)
 
-[sub_resource type="Animation" id="Animation_k60xw"]
-resource_name = "red_seed_idle"
+[sub_resource type="Animation" id="Animation_hvkfw"]
+resource_name = "idle"
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -24,35 +23,20 @@ tracks/0/keys = {
 "values": [0, 1, 2, 1]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_p8m0b"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i1a5l"]
 _data = {
-"red_seed_idle": SubResource("Animation_k60xw")
+"idle": SubResource("Animation_hvkfw")
 }
 
-[node name="RedSeed" type="Area2D"]
-collision_layer = 16
-collision_mask = 32
-script = ExtResource("1_puigi")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_vdfxm")
+[node name="Seed" instance=ExtResource("1_as6n5")]
+texture = ExtResource("2_pkljp")
 hframes = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(-0.5, 21.5)
-shape = SubResource("RectangleShape2D_161p8")
+shape = SubResource("RectangleShape2D_20njo")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "red_seed_idle"
+[node name="AnimationPlayer" parent="." index="1"]
 libraries = {
-"": SubResource("AnimationLibrary_p8m0b")
+"": SubResource("AnimationLibrary_i1a5l")
 }
-
-[node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(0, -30)
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_el70x")
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]
