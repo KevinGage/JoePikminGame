@@ -93,11 +93,23 @@ func pluck():
 	$Area2D.monitorable = false
 
 
-func stop_follow(lost_follower: CharacterBody2D):
+# lost_follower: is a node in the followers array to be removed
+# chain: true if you want all followers behind in the chain to also stop following (default)
+# chain: false if you only want to remove that single follower and re-assign all others
+func stop_follow(lost_follower: CharacterBody2D, chain: bool = true):
 	var i = followers.find(lost_follower)
-	var lost_followers = followers.slice(i)
 	
-	for follower in lost_followers:
-		follower.is_collectable = true
-		follower.movement_target = null
-		followers.erase(follower)
+	if chain == true:
+		var lost_followers = followers.slice(i)
+		for follower in lost_followers:
+			follower.is_collectable = true
+			follower.movement_target = null
+			followers.erase(follower)
+	else:
+		lost_follower.movement_target = null
+		followers.remove_at(i)
+		if followers.size() > 0:
+			followers[0].movement_target = self
+			if followers.size() > 1:
+				for n in range(1,followers.size()):
+					followers[n].movement_target = followers[n - 1]
