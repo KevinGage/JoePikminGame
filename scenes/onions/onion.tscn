@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://6r6phaq10ntc"]
+
+[ext_resource type="Script" path="res://scenes/onions/onion.gd" id="1_6eg1o"]
+[ext_resource type="Texture2D" uid="uid://slmao734stq7" path="res://images/red_onion.png" id="2_w74ib"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_amget"]
+radius = 17.0
+height = 44.0
+
+[sub_resource type="Animation" id="Animation_27rft"]
+resource_name = "idle"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nr7pj"]
+_data = {
+"idle": SubResource("Animation_27rft")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_td4gb"]
+size = Vector2(20, 55)
+
+[node name="Onion" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_6eg1o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 16)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_amget")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_w74ib")
+hframes = 2
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_nr7pj")
+}
+
+[node name="CollectionPosition" type="Node2D" parent="."]
+position = Vector2(0, 27)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 60.5)
+shape = SubResource("RectangleShape2D_td4gb")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

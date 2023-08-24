@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://3eja0t4fr23e"]
+
+[ext_resource type="PackedScene" uid="uid://6r6phaq10ntc" path="res://scenes/onions/onion.tscn" id="1_wt12g"]
+[ext_resource type="Texture2D" uid="uid://7kfck2lydc06" path="res://images/yellow_onion.png" id="2_aq7x3"]
+
+[node name="Onion" instance=ExtResource("1_wt12g")]
+onion_color = "yellow"
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_aq7x3")
