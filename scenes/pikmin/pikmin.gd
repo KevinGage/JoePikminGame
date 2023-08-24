@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @export var movement_target: CharacterBody2D
 @export var navigation_agent: NavigationAgent2D
+@export var pikmin_color: String = "none"
 
 @onready var is_collectable: bool = true
 
@@ -60,7 +61,7 @@ func _physics_process(delta):
 						if direction.y <= -0.1:
 							velocity.y = JUMP_VELOCITY
 			else:
-				movement_target.stop_follow(self)
+				movement_target.stop_follow(self, true)
 		else:
 			velocity.x = 0
 			
@@ -104,9 +105,9 @@ func _on_timer_timeout():
 	$CollectionArea.monitorable = true
 
 
-func stop_follow(follower):
+func stop_follow(follower: CharacterBody2D, chain: bool = true):
 	if movement_target != null and "stop_follow" in movement_target:
-		movement_target.stop_follow(follower)
+		movement_target.stop_follow(follower, chain)
 
 
 func _on_collection_area_body_entered(body):
@@ -114,3 +115,14 @@ func _on_collection_area_body_entered(body):
 		if "follow" in body:
 			$CollectAudioStreamPlayer.play()
 			body.follow(self)
+
+
+func beam_up(color: String, pos: Vector2):
+	if color == pikmin_color:
+		movement_target.stop_follow(self, false)
+		var tween = get_tree().create_tween()
+		tween.set_parallel(true)
+		tween.tween_property($".", "scale", Vector2(0,0), 1.0)
+		tween.tween_property($".", "position", pos, 1.0).set_trans(Tween.TRANS_EXPO)
+		await tween.finished
+		queue_free()
