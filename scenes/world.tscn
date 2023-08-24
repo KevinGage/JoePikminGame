@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b21cc0y0noc0h"]
+[gd_scene load_steps=12 format=3 uid="uid://b21cc0y0noc0h"]
 
 [ext_resource type="PackedScene" uid="uid://ne85h37tfl61" path="res://scenes/level_1.tscn" id="1_3hliq"]
 [ext_resource type="PackedScene" uid="uid://6kk858b2aaag" path="res://scenes/seeds/yellow_seed.tscn" id="2_lnf4n"]
@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://cpitfqts4nq0a" path="res://scenes/player/player.tscn" id="4_puvoh"]
 [ext_resource type="PackedScene" uid="uid://fp07g7i2bv6o" path="res://scenes/pikmin/yellow_pikmin.tscn" id="6_kfdrc"]
 [ext_resource type="PackedScene" uid="uid://ct3bt84tk5xdn" path="res://scenes/pikmin/blue_pikmin.tscn" id="8_hwfae"]
+[ext_resource type="PackedScene" uid="uid://yqtuq3d37g1d" path="res://scenes/onions/blue_onion.tscn" id="9_01n8f"]
+[ext_resource type="PackedScene" uid="uid://wltoqolu4ph7" path="res://scenes/onions/red_onion.tscn" id="9_nrpdq"]
+[ext_resource type="PackedScene" uid="uid://3eja0t4fr23e" path="res://scenes/onions/yellow_onion.tscn" id="10_4ccdq"]
 
 [node name="World" type="Node2D"]
 
@@ -36,3 +39,12 @@ position = Vector2(396, -141)
 
 [node name="Pikmin2" parent="." instance=ExtResource("8_hwfae")]
 position = Vector2(355, -138)
+
+[node name="Onion2" parent="." instance=ExtResource("9_01n8f")]
+position = Vector2(188, -150)
+
+[node name="Onion" parent="." instance=ExtResource("9_nrpdq")]
+position = Vector2(519, -72)
+
+[node name="Onion3" parent="." instance=ExtResource("10_4ccdq")]
+position = Vector2(-227, -150)
