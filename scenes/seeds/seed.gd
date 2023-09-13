@@ -1,7 +1,7 @@
 extends Sprite2D
 
 @export var pikmin_scene = preload("res://scenes/pikmin/red_pikmin.tscn")
-
+var spawnable = true
 
 func spawn_pikmin():
 	var new_pikmin: CharacterBody2D = pikmin_scene.instantiate()
@@ -14,6 +14,8 @@ func _on_audio_stream_player_finished():
 
 
 func _on_area_2d_area_entered(_area):
-	call_deferred("spawn_pikmin")
-	$".".visible = false
-	$AudioStreamPlayer.play()
+	if spawnable == true:
+		spawnable = false
+		call_deferred("spawn_pikmin")
+		$".".visible = false
+		$AudioStreamPlayer.play()
